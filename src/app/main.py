@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
 
-from app.api.main import api_router
+from app.api.v1.main import api_router
 from app.core.config import settings
 from app.core.database import init_db
 
