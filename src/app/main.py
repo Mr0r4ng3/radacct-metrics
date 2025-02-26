@@ -5,7 +5,7 @@ from fastapi.routing import APIRoute
 
 from app.api.v1.main import api_router
 from app.core.config import settings
-from app.core.database import init_db
+from app.core.db.database import init_db
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
