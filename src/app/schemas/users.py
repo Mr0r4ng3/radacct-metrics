@@ -15,3 +15,7 @@ class UserCreate(UserBase):
 class UserPublic(UserBase):
     id: int
     is_active: bool
+
+    @property
+    def disabled(self) -> bool:
+        return not self.is_active
