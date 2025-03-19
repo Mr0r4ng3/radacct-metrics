@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 
-from pydantic import BaseModel
+from app.schemas.base import Schema
 
 
 class NasPortTypeEnum(Enum):
@@ -9,7 +9,7 @@ class NasPortTypeEnum(Enum):
     Async = "Async"
 
 
-class RadacctSchema(BaseModel):
+class RadacctSchema(Schema):
     radacctid: int
     acctsessionid: str
     acctuniqueid: str

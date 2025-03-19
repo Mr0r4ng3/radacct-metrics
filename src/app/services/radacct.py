@@ -1,8 +1,12 @@
+from collections.abc import Sequence
 from datetime import datetime
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.radacct import Radacct
+from app.pagination import paginate
+from app.schemas.pagination import PaginationParams
 
 cached_classes = {}
 
@@ -21,21 +25,20 @@ class RadAcctService:
 
         return cached_classes[table_name]
 
-    def get_all(
+    def list(
         self,
         table_name: str,
+        pagination: PaginationParams,
         start_time: datetime | None = None,
         end_time: datetime | None = None,
-        limit: int = 100,
-        offset: int = 0,
-    ) -> list[Radacct]:
+    ) -> tuple[Sequence[Radacct], int]:
         model = self._get_model(table_name)
-        query = self._db.query(model)
+        statement = select(model)
 
         if start_time is not None:
-            query = query.filter(model.acctstarttime >= start_time)
+            statement = statement.filter(model.acctstarttime >= start_time)
 
         if end_time is not None:
-            query = query.filter(model.acctstoptime <= end_time)
+            statement = statement.filter(model.acctstoptime <= end_time)
 
-        return query.offset(offset).limit(limit).all()
+        return paginate(session=self._db, statement=statement, pagination=pagination)
