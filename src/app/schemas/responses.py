@@ -1,18 +1,10 @@
-from typing import TypeVar
+from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
 
-T = TypeVar("T")
+T = TypeVar("T", bound=Any)
 
 
-class ResponseBase(BaseModel):
-    message: str
-    code: int
-
-
-class Response(ResponseBase):
-    result: T | None
-
-
-class ResponseError(ResponseBase):
-    pass
+class Response(BaseModel, Generic[T]):
+    data: T
+    metadata: dict[str, Any] = {}

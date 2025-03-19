@@ -6,6 +6,7 @@ from fastapi.routing import APIRoute
 from app.api.v1.main import api_router
 from app.core.config import settings
 from app.core.db.database import init_db
+from app.exception_handlers import add_exception_handlers
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
@@ -26,6 +27,8 @@ app = FastAPI(
 )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+add_exception_handlers(app)
 
 if __name__ == "__main__":
     import uvicorn

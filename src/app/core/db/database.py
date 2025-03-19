@@ -7,7 +7,7 @@ from app.schemas.users import UserCreate
 from app.services.users import UserService
 
 engine = create_engine(
-    settings.APP_DATABASE_URL, connect_args={"check_same_thread": False}
+    settings.APP_DATABASE_URI, connect_args={"check_same_thread": False}
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

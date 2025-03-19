@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Literal
 
+from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
@@ -25,8 +26,27 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER: str = "admin"
     FIRST_SUPERUSER_PASSWORD: str
 
+    MYSQL_HOST: str
+    MYSQL_PORT: int
+    MYSQL_USER: str
+    MYSQL_PASS: str
+    MYSQL_DB: str
+
     @property
-    def APP_DATABASE_URL(self) -> str:
+    def RADIUS_DATABASE_URI(self) -> str:
+        return str(
+            MultiHostUrl.build(
+                scheme="mysql+mysqlconnector",
+                username=self.MYSQL_USER,
+                password=self.MYSQL_PASS,
+                host=self.MYSQL_HOST,
+                port=self.MYSQL_PORT,
+                path=self.MYSQL_DB,
+            )
+        )
+
+    @property
+    def APP_DATABASE_URI(self) -> str:
         return f"sqlite:///{ROOT_DIR}/db.sqlite3"
 
 
