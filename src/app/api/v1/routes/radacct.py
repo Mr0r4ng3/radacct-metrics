@@ -1,9 +1,8 @@
-from datetime import datetime
-
 from fastapi.routing import APIRouter
 
 from app.core.db.radacct_db import get_db, get_metadata
 from app.depends.pagination import PaginationParamsQuery
+from app.depends.time_range import TimeRangeParamsQuery
 from app.exceptions import BadRequest
 from app.schemas.radacct import RadacctSchema
 from app.schemas.responses import ListResourceResponse, Response
@@ -22,17 +21,14 @@ def get_tables():
 def get_all(
     tablename: str,
     pagination: PaginationParamsQuery,
-    start_time: str | None = None,
-    end_time: str | None = None,
+    time_range: TimeRangeParamsQuery,
 ):
     if tablename not in get_tables():
         raise BadRequest("Invalid tablename")
 
-    if start_time is not None:
-        start_time = datetime.fromisoformat(start_time)
+    print(time_range)
 
-    if end_time is not None:
-        end_time = datetime.fromisoformat(end_time)
+    start_time, end_time = time_range
 
     with get_db() as db:
         service = RadAcctService(db)
