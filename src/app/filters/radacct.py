@@ -9,8 +9,8 @@ class RadacctBaseFilter(Filter):
 
 
 class RadacctTimeFilter(Filter):
-    acctstarttime__gte: datetime | None = None
-    acctstoptime__lte: datetime | None = None
+    acctstarttime__gte: datetime
+    acctstoptime__lte: datetime
 
 
 class RadacctFilter(RadacctBaseFilter, RadacctTimeFilter): ...
