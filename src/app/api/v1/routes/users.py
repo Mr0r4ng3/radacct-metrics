@@ -1,7 +1,7 @@
 from fastapi import status
 from fastapi.routing import APIRouter
 
-from app.api.dependencies import SessionDep
+from app.core.db.dependencies import DbDep
 from app.core.security.auth.dependencies import UserDep
 from app.schemas.responses import Response
 from app.schemas.users import UserCreate, UserPublic
@@ -15,7 +15,7 @@ router = APIRouter()
 )
 def create_user(
     current_user: UserDep,  # noqa: ARG001
-    db: SessionDep,
+    db: DbDep,
     user: UserCreate,
 ) -> Response[UserPublic]:
     user_service = UserService(db)

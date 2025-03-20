@@ -1,38 +1,32 @@
 from datetime import datetime
-from enum import Enum
 
 from app.schemas.base import Schema
 
 
-class NasPortTypeEnum(Enum):
-    Virtual = "Virtual"
-    Async = "Async"
-
-
 class RadacctSchema(Schema):
     radacctid: int
-    acctsessionid: str
-    acctuniqueid: str
-    username: str
-    groupname: str
-    realm: str
-    nasipaddress: str
-    nasportid: str
-    nasporttype: NasPortTypeEnum
-    acctstarttime: datetime
-    acctstoptime: datetime
-    acctsessiontime: int
-    acctauthentic: str
-    connectinfo_start: str
-    connectinfo_stop: str
-    acctinputoctets: int
-    acctoutputoctets: int
-    calledstationid: str
-    callingstationid: str
-    acctterminatecause: str
-    servicetype: str
-    framedprotocol: str
-    framedipaddress: str
-    acctstartdelay: int
-    acctstopdelay: int
-    xascendsessionsvrkey: str
+    acctsessionid: str | None = None
+    acctuniqueid: str | None = None
+    username: str | None = None
+    groupname: str | None = None
+    realm: str | None = None
+    nasipaddress: str | None = None
+    nasportid: str | None = None
+    nasporttype: str | None = None
+    acctstarttime: datetime | None = None
+    acctstoptime: datetime | None = None
+    acctsessiontime: int | None = None
+    acctauthentic: str | None = None
+    connectinfo_start: str | None = None
+    connectinfo_stop: str | None = None
+    acctinputoctets: int | None = None
+    acctoutputoctets: int | None = None
+    calledstationid: str | None = None
+    callingstationid: str | None = None
+    acctterminatecause: str | None = None
+    servicetype: str | None = None
+    framedprotocol: str | None = None
+    framedipaddress: str | None = None
+    acctstartdelay: int | None = None
+    acctstopdelay: int | None = None
+    xascendsessionsvrkey: str | None = None

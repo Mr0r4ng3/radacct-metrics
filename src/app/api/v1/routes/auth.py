@@ -4,7 +4,7 @@ from fastapi import Depends
 from fastapi.routing import APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.api.dependencies import SessionDep
+from app.core.db.dependencies import DbDep
 from app.core.security.auth.func import authenticate, create_access_token
 from app.core.security.auth.schemes import Token
 from app.exceptions import InvalidCredentials
@@ -20,7 +20,7 @@ router = APIRouter()
 )
 def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    db: SessionDep,
+    db: DbDep,
 ) -> Token:
     user = authenticate(form_data.username, form_data.password, db=db)
 

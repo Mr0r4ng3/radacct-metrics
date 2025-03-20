@@ -7,8 +7,8 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import SessionDep
 from app.core.config import settings
+from app.core.db.dependencies import DbDep
 from app.core.security.auth.schemes import TokenData
 from app.exceptions import InvalidCredentials, NotAuthenticated, Unauthorized
 from app.schemas.users import UserPublic
@@ -38,7 +38,7 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: SessionDep):
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: DbDep):
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
